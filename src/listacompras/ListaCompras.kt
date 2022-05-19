@@ -4,53 +4,80 @@ package listacompras
 afinal é um sistema de lista de compras. Não confundir com o conceito de List do Kotlin*/
 class ListaCompras {
     companion object {
-        fun informarQuantidadeVerduraGrao(alimento: String): Int {
+        fun informarQuantidadeVerduraGrao(alimento: String): Double {
             println("Informe a quantidade de $alimento em gramas: ")
-            val input = readln()
+            val gramas: Double?
+            return try {
+                val input = readln()
 
-            if (input.isEmpty() || input.isBlank()) {
-                throw UnsupportedOperationException("Não é permitido inserir valor vazio")
-            }
-
-            var gramas = 0
-            try {
-                gramas = input.toInt()
-                if (gramas < 0) {
-                    println("Não é permitido números negativos, tente novamente")
-                    informarQuantidadeVerduraGrao(alimento)
+                if (input.isEmpty() || input.isBlank()) {
+                    throw UnsupportedOperationException("Não é permitido inserir valor vazio")
                 }
+                gramas = input.toDoubleOrNull()
 
+                if (gramas != null) {
+                    if (gramas < 0.0) {
+                        throw UnsupportedOperationException("Não é permitido números negativos, tente novamente")
+                    }
+                    return gramas
+                }
+                throw NullPointerException("Valor não suportado")
             } catch (exception: NumberFormatException) {
                 println("Não é permitido texto, somente número")
+                informarQuantidadeVerduraGrao(alimento)
+            } catch (exception: UnsupportedOperationException) {
+                println(exception.message)
+                informarQuantidadeVerduraGrao(alimento)
+            } catch (exception: NullPointerException) {
+                println(exception.message)
+                informarQuantidadeVerduraGrao(alimento)
             }
-            return gramas
         }
 
         fun informarNomeAlimento(alimento: String): String {
-            println("Informe o tipo $alimento a ser adicionado na lista: ")
-            val nome = readln()
+            return try {
+                println("Informe o tipo $alimento a ser adicionado na lista: ")
+                val nome = readln()
 
-            if (nome.isEmpty() || nome.isBlank()) {
-                throw UnsupportedOperationException("Não é permitido inserir valor vazio")
+                if (nome.isEmpty() || nome.isBlank()) {
+                    throw UnsupportedOperationException("Não é permitido inserir valor vazio")
+                }
+                return nome
+            }catch (exception: UnsupportedOperationException){
+                println(exception.message)
+                informarNomeAlimento(alimento)
             }
-            return nome
         }
 
-        fun informarQuantidadeLegumeOutros(alimento: String): Double {
+
+        fun informarQuantidadeLegumeOutros(alimento: String): Int {
             println("Informe a quantidade de $alimento: ")
-            val input = readln()
+            val qtd: Int?
+            return try {
+                val input = readln()
 
-            if (input.isEmpty() || input.isBlank()) {
-                throw UnsupportedOperationException("Não é permitido inserir valor vazio")
-            }
-
-            var qtd = 0.0
-                qtd = input.toDoubleOrNull() ?:-1.0
-                if (qtd < 0.0) {
-                    println("Formato inválido, tente novamente")
-                    informarQuantidadeLegumeOutros(alimento)
+                if (input.isEmpty() || input.isBlank()) {
+                    throw UnsupportedOperationException("Não é permitido inserir valor vazio")
                 }
-            return qtd
+                qtd = input.toIntOrNull()
+
+                if (qtd != null) {
+                    if (qtd < 0) {
+                        throw UnsupportedOperationException("Não é permitido números negativos, tente novamente")
+                    }
+                    return qtd
+                }
+                throw NullPointerException("Valor não suportado")
+            } catch (exception: NumberFormatException) {
+                println("Não é permitido texto, somente número")
+                informarQuantidadeLegumeOutros(alimento)
+            } catch (exception: UnsupportedOperationException) {
+                println(exception.message)
+                informarQuantidadeLegumeOutros(alimento)
+            } catch (exception: NullPointerException) {
+                println(exception.message)
+                informarQuantidadeLegumeOutros(alimento)
+            }
         }
 
     }

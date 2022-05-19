@@ -17,45 +17,66 @@ class Menu {
             println("Outros")
             println("Ver lista")
             println("Sair")
-            val alimento = readln().lowercase()
+            val alimento: String
+            try {
+                alimento = readln().lowercase()
 
-            if ((alimento != "verdura") && (alimento != "legume") && (alimento != "grão") && (alimento != "grao") && (alimento != "outros") && (alimento != "ver lista") && (alimento != "sair")) {
-                throw IllegalArgumentException("Tipo de alimento inválido")
-            }
-
-            when (alimento) {
-                "verdura", "grão", "grao" -> {
-                    /*Não é para mexer aqui*/
-                    val quantidade = informarQuantidadeVerduraGrao(alimento)
-                    val nome = informarNomeAlimento(alimento)
-
-                    listaAlimentos[nome] = quantidade
-                    menu()
+                if (alimento.isEmpty() || alimento.isBlank()) {
+                    throw UnsupportedOperationException("Não é permitido inserir valor vazio")
                 }
-                "legume", "outros" -> {
-                    val quantidade = informarQuantidadeLegumeOutros(alimento)
-                    val nome = informarNomeAlimento(alimento)
 
-                    listaAlimentos[nome] = quantidade
-                    menu()
-                }
-                "ver lista" -> {
+                when (alimento) {
+                    "verdura", "grão", "grao" -> {
+                        /*Não é para mexer aqui*/
+                        val quantidade = informarQuantidadeVerduraGrao(alimento)
+                        val nome = informarNomeAlimento(alimento)
+
+                        listaAlimentos[nome] = quantidade
+                        menu()
+                    }
+                    "legume", "outros" -> {
+                        val quantidade = informarQuantidadeLegumeOutros(alimento)
+                        val nome = informarNomeAlimento(alimento)
+
+                        listaAlimentos[nome] = quantidade
+                        menu()
+                    }
+                    "ver lista" -> {
                         showAlimentos()
                         menu()
 
-                }
+                    }
 
-                "sair" -> {
-                    println("Até breve!")
-                    exitProcess(0)
+                    "sair" -> {
+                        println("Até breve!")
+                        exitProcess(0)
+                    }
+                    else -> throw IllegalArgumentException("Tipo de alimento inválido")
+
                 }
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+                menu()
+            } catch (e: UnsupportedOperationException) {
+                println(e.message)
+                menu()
             }
         }
-        fun showAlimentos(){
-            listaAlimentos.forEach { (nomeAlimento, qtd) ->
-                println("nome : $nomeAlimento , quantidade : $qtd")
 
+        private fun showAlimentos() {
+            try {
+                if(listaAlimentos.isEmpty()){
+                    throw UnsupportedOperationException("Lista está vazia")
+                }
+                listaAlimentos.forEach { (nomeAlimento, qtd) ->
+                    println("nome : $nomeAlimento , quantidade : $qtd")
+                }
+            }catch (e: UnsupportedOperationException){
+                println(e.message)
+            }catch (e: Exception){
+                println("Erro não encontrado")
             }
+
         }
     }
 }
