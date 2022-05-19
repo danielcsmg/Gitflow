@@ -1,5 +1,5 @@
 package alimento
 
-class Verdura(override val nome: String, override val quantidade: Int, override val tipo: String = "verdura") :
+class Verdura(override var nome: String = "", override var quantidade: Double = 0.0, override val tipo: String = "verdura") :
     Alimento {
 }
