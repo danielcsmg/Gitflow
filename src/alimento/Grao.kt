@@ -1,4 +1,4 @@
 package alimento
 
-class Grao(override val nome: String, override val quantidade: Int, override val tipo: String = "grão") : Alimento {
+class Grao(override var nome: String = "", override var quantidade: Double = 0.0, override val tipo: String = "grão") : Alimento {
 }

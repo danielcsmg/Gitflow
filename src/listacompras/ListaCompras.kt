@@ -1,11 +1,13 @@
 package listacompras
 
+import alimento.Alimento
+
 /*Aqui chamamos de lista de compras apenas para ter as funções específicas da lista de compras que o sistema exige,
 afinal é um sistema de lista de compras. Não confundir com o conceito de List do Kotlin*/
 class ListaCompras {
     companion object {
-        fun informarQuantidadeVerduraGrao(alimento: String): Double {
-            println("Informe a quantidade de $alimento em gramas: ")
+        fun informarQuantidadeVerduraGrao(alimento: Alimento): Double {
+            println("Informe a quantidade de ${alimento.tipo} em gramas: ")
             val gramas: Double?
             return try {
                 val input = readln()
@@ -34,9 +36,9 @@ class ListaCompras {
             }
         }
 
-        fun informarNomeAlimento(alimento: String): String {
+        fun informarNomeAlimento(alimento: Alimento): String {
             return try {
-                println("Informe o tipo $alimento a ser adicionado na lista: ")
+                println("Informe o tipo ${alimento.tipo} a ser adicionado na lista: ")
                 val nome = readln()
 
                 if (nome.isEmpty() || nome.isBlank()) {
@@ -50,8 +52,8 @@ class ListaCompras {
         }
 
 
-        fun informarQuantidadeLegumeOutros(alimento: String): Int {
-            println("Informe a quantidade de $alimento: ")
+        fun informarQuantidadeLegumeOutros(alimento: Alimento): Int {
+            println("Informe a quantidade de ${alimento.tipo}: ")
             val qtd: Int?
             return try {
                 val input = readln()
